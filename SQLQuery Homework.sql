@@ -32,7 +32,8 @@ select count ( distinct deptname) from Employee
 select firstName as Name from Employee
 
 --Write a query to get first 10 records from the employee table
-select * from Employee where empid between 1 and 10
+select TOP 10 * from Employee
+--select * from Employee where empid between 1 and 10
 
 
 
