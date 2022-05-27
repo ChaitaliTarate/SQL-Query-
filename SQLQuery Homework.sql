@@ -184,9 +184,10 @@ select * from Prod where price not between 500 and 4000
 select * from Prod where pName between  'clothes' and 'table'
 
 --34.When displaying the Customers table, make an ALIAS of the PostalCode column, the column should be called Pno instead.
+select postalcode as pno from Customer
 
 --35.When displaying the Customers table, refer to the table as Consumers instead of Customers.
-
+select* from Customer as Consumers
 
 --36.List the number of customers in each country.
 select count (custId)as records,country from Customer group by country
