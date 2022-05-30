@@ -366,3 +366,118 @@ select *  from Person1 where personId<=3
 
 
 	select replace(name,'aarti','kirti') as info from tblEmployee where id=7
+
+
+	--28/05/22
+
+	--SubQueries/innerQueries
+
+--max salary
+select max(salary) as maxsalary from tblEmployee
+select name,salary from tblemployee where salary=(select max(salary) from tblEmployee)
+
+--2nd hieghest salary
+select name,salary from tblemployee where salary=(
+select MAX(salary) from tblEmployee where salary<>(select max(salary) from tblEmployee)
+)
+
+--3rd heighest salary
+
+select name,salary from tblemployee where salary=(
+select max(salary) from tblEmployee where salary<(
+select max(salary) from tblEmployee where salary<>(select max(salary) from tblEmployee)
+)
+)
+
+select name,salary from tblemployee where salary=(
+select max(salary) from tblEmployee where salary<(
+select max(salary) from tblEmployee where salary<>(50000)
+)
+)  
+select name,salary from tblemployee where salary=(
+select max(salary) from tblEmployee where salary<(
+35000
+)
+)   
+select name,salary from tblemployee where salary=(
+34998.99
+)                         
+
+create view highestsalary as
+select name,salary from tblemployee where salary=(
+select max(salary) from tblEmployee where salary<(
+select max(salary) from tblEmployee where salary<>(select max(salary) from tblEmployee)
+)
+)
+
+select * from highestsalary
+
+select * from tblEmployee where id in
+(
+select id from tblEmployee where salary>35000
+)
+
+select * from Product1
+
+select * from Person1
+select * from Orders
+
+--display person nam who has the product whos price is>5000
+select p.name , o.price
+from Person1 p inner join Orders o on p.personId=o.personId
+where price>500
+
+--display name  of the emps whoe take higher salary than the emp id 4
+select name,salary from tblEmployee where salary >
+(
+select salary from tblEmployee where id=4
+)
+--select emp details whos city is same as id 1
+select name,city from tblEmployee where city =
+(
+select city from tblEmployee where id=1
+)
+
+--display emp details whoes salary is greater than avg salry of all emps
+select * from tblEmployee where salary >
+(
+select AVG(salary) from tblEmployee 
+)
+
+--find emp whos salary is more than avg salry of any dept
+select * from tblEmployee where salary >all
+(
+select AVG(salary) from tblEmployee group by did
+)
+
+--display sum of salary dept wise
+select did,Sum(salary) salary from tblEmployee group by did
+
+--dispaly emp  who get more than avg salary of sales dept
+select * from tblEmployee where did in
+(
+select did from dept where dname like'HR%'
+)
+and salary>(select avg(salary) from tblEmployee)
+
+select * from dept
+
+--subqueries with update statement
+
+--update the salary by 30% of emp who work  in dev dept
+update tblEmployee set salary=salary*0.30 where did =(select did from dept where dname='Developer')
+
+--subquery with delete statment
+delete from tblEmployee where did=(select did from dept where dname='sales')
+
+select *
+from [ThinkBridge].[dbo].Product p
+join [ThinkQ].[dbo].tblEmployee e on e.id=p.Id
+
+select * from tblEmployee
+
+select * from dept
+
+
+
+
